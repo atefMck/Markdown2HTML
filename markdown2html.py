@@ -9,4 +9,3 @@ if not os.path.isfile(argv[1]):
     print("Missing {}".format(argv[1]), file=stderr)
     exit(1)
 exit(0)
-
