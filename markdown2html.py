@@ -47,10 +47,10 @@ def array_parser(array):
             while i < len(array) and array[i] != '\n':
                 if i + 1 < len(array) and array[i + 1] != '\n':
                     result += array[i].replace('\n', '\n<br/>\n')
-                else:
+                elif array[i] != '\n':
                     result += array[i]
                 i += 1
-            result += "\n</p>\n"
+            result += "</p>\n"
         i += 1
     return result
 
