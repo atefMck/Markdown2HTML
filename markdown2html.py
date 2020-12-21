@@ -17,6 +17,23 @@ def file_to_array():
         array = [line for line in file]
     return array
 
+def parse_style(string):
+    result = string
+    if result.count('**') >= 2:
+        i = 0
+        while i < result.count('**'):
+            result = result.replace('**', '<b>', 1)
+            result = result.replace('**', '</b>', 1)
+            i += 2
+    
+    if result.count("__") >= 2:
+        i = 0
+        while i < result.count('__'):
+            result = result.replace('__', '<em>', 1)
+            result = result.replace('__', '</em>', 1)
+            i += 2
+    return result
+
 def array_parser(array):
     result = ""
     i = 0
@@ -62,6 +79,8 @@ def file_writer(text, html_file):
 def main():
     """Main func"""
     array = file_to_array()
+    for i in range(len(array)):
+        array[i] = parse_style(array[i])
     text = array_parser(array)
     file_writer(text, argv[2])
 
