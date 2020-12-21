@@ -34,6 +34,14 @@ def array_parser(array):
                 result += html + '\n'
                 i += 1
             result += "</ul>\n"
+        elif '*' in array[i]:
+            result += "<ol>\n"
+            while i < len(array) and '*' in array[i]:
+                text = array[i].strip('*\n').rstrip().lstrip()
+                html = "<li>{}</li>".format(text)
+                result += html + '\n'
+                i += 1
+            result += "</ol>\n"
         elif array[i] == '\n':
             pass
         else:
