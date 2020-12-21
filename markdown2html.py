@@ -42,7 +42,7 @@ def array_parser(array):
                 result += html + '\n'
                 i += 1
             result += "</ol>\n"
-        else:
+        elif array[i] != '\n':
             result += "<p>\n"
             while i < len(array) and array[i] != '\n':
                 if i + 1 < len(array) and array[i + 1] != '\n':
