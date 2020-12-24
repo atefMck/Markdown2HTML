@@ -36,20 +36,16 @@ def parse_style(string):
 
 def parse_crypting(string):
     result = string
-    if result.count('**') == 2:
-        i = 0
-        while i < result.count('**'):
-            result = result.replace('**', '<b>', 1)
-            result = result.replace('**', '</b>', 1)
-            i += 2
-    
-    if result.count("__") >= 2:
-        i = 0
-        while i < result.count('__'):
-            result = result.replace('__', '<em>', 1)
-            result = result.replace('__', '</em>', 1)
-            i += 2
+    if result.count('[[') == 1:
+        text = result[result.index('[') + 2:result.index(']')]
+        crypted = hashlib.md5(text.encode()).hexdigest()
+        result = result.replace('[[', '').replace(']]', '').replace(text, crypted)
+    if result.count('((') == 1:
+        text = result[result.index('(') + 2:result.index(')')]
+        crypted = text.replace('C', '').replace('c', '')
+        result = result.replace('((', '').replace('))', '').replace(text, crypted)
     return result
+        
 
 def array_parser(array):
     result = ""
@@ -99,6 +95,7 @@ def main():
     array = file_to_array()
     for i in range(len(array)):
         array[i] = parse_style(array[i])
+        array[i] = parse_crypting(array[i])
     text = array_parser(array)
     file_writer(text, argv[2])
 
