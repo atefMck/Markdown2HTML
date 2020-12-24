@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Markdown to HTML"""
 from sys import argv, exit, stderr
-import os
+import os, hashlib
 
 def input_check():
     """Check input"""
@@ -20,6 +20,23 @@ def file_to_array():
 def parse_style(string):
     result = string
     if result.count('**') >= 2:
+        i = 0
+        while i < result.count('**'):
+            result = result.replace('**', '<b>', 1)
+            result = result.replace('**', '</b>', 1)
+            i += 2
+    
+    if result.count("__") >= 2:
+        i = 0
+        while i < result.count('__'):
+            result = result.replace('__', '<em>', 1)
+            result = result.replace('__', '</em>', 1)
+            i += 2
+    return result
+
+def parse_crypting(string):
+    result = string
+    if result.count('**') == 2:
         i = 0
         while i < result.count('**'):
             result = result.replace('**', '<b>', 1)
@@ -78,6 +95,7 @@ def file_writer(text, html_file):
 
 def main():
     """Main func"""
+    input_check()
     array = file_to_array()
     for i in range(len(array)):
         array[i] = parse_style(array[i])
